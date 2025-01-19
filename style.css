@@ -1,6 +1,151 @@
 body {
-    /* Set line height to 1.5 times the font size
-         and use the OS’s UI font as the website font
-       */
-    font: 100%/1.5 system-ui;
-  }
+  font: 100%/1.5 system-ui;
+
+
+
+  /* Limit the maximum width of the content */
+  max-width: 100ch;
+
+  /* Center content horizontally */
+  margin-inline: auto;
+
+  /* Optional: Add padding for spacing on smaller screens */
+  padding: 0 1rem;
+
+  /* Set font properties */
+  font: 100%/1.5 system-ui;
+
+}
+
+nav ul, nav li {
+  display: contents;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1em 0;
+}
+
+nav a {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+  padding: 0.5em;
+}
+
+nav a.current {
+  border-bottom: 0.4em solid oklch(80% 3% 200); /* Style current page link */
+  padding-bottom: 0.1em; /* Adjust padding to counter border */
+}
+
+
+
+:root {
+  --color-accent: oklch(75% 0.2 45);
+}
+
+html {
+  accent-color: var(--color-accent);
+}
+
+nav a:hover {
+  border-bottom: 0.4em solid var(--color-accent);
+  background-color: oklch(from var(--color-accent) 95% 5% h);
+}
+
+
+
+
+
+form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em;
+}
+
+form label {
+  display: contents; /* Allow label's children to be placed directly in the grid */
+}
+
+form input,
+form textarea {
+  width: 100%; /* Ensure inputs take full width of their grid area */
+}
+
+form button {
+  grid-column: 1 / -1; /* Span the entire row */
+  width: auto; /* Adjust width to fit content */
+  padding: 0.5em 1em; /* Add padding for better appearance */
+}
+
+
+
+
+
+
+
+
+
+.projects {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2em;
+  display: grid; /* Enable grid layout */
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)); /* Responsive grid */
+  gap: 2em; /* Spacing between items */
+}
+
+.projects article {
+  display: grid; /* Make articles grid containers */
+  grid-template-rows: subgrid; /* Align content within the grid */
+  grid-row: span 3; /* Span each article across 3 rows */
+  gap: 1em; /* Space out children */
+}
+
+.projects h2 {
+  font-size: 1.5em;
+  margin: 0; /* Remove excess spacing */
+  text-align: left;
+}
+
+.projects img {
+  width: 100%; /* Ensure images fill their grid cell */
+  aspect-ratio: 16/9; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure images fit neatly */
+  background-color: #e2a89f;
+}
+
+.projects p {
+  margin: 0;
+  line-height: 1.5;
+  color: #3184f8; /* Example color */
+}
+
+
+
+
+
+
+
+
+
+/* Dark Mode Styles */
+body {
+  background-color: #bcbaba;
+  color: #000000;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+.cv-page {
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Example of an odd font */
+}
