@@ -22,6 +22,7 @@ nav ul, nav li {
 }
 
 nav {
+  --border-color: oklch(50% 10% 200 / 40%);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -39,23 +40,34 @@ nav a {
 }
 
 nav a.current {
-  border-bottom: 0.4em solid oklch(80% 3% 200); /* Style current page link */
-  padding-bottom: 0.1em; /* Adjust padding to counter border */
+  border-bottom: 0.4em solid var(--border-color);
+  padding-bottom: 0.1em;
+}
+
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
+  font-family: inherit;
 }
 
 
 
 :root {
   --color-accent: oklch(75% 0.2 45);
+  color-scheme: light dark; /* Allow the site to adapt to the OS color scheme */
 }
 
 html {
   accent-color: var(--color-accent);
+  background-color: Canvas; /* Use system color for background */
+  color: CanvasText; /* Use system color for text */
 }
 
 nav a:hover {
   border-bottom: 0.4em solid var(--color-accent);
-  background-color: oklch(from var(--color-accent) 95% 5% h);
+  background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
 }
 
 
@@ -136,13 +148,10 @@ form button {
 
 /* Dark Mode Styles */
 body {
-  background-color: #bcbaba;
-  color: #000000;
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  font: 100%/1.5 system-ui;
+  max-width: 100ch;
+  margin-inline: auto;
+  padding: 0 1rem;
 }
 
 
