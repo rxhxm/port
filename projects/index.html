@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>projects index</title>
     <link rel="stylesheet" href="../style.css">
-    <script type="module" src="../global.js"></script>
 
     <!-- <nav>
         <ul>
@@ -17,72 +16,34 @@
         </ul>
     </nav> -->
 
+    <script src="../global.js" type="module"></script>
+    <script src="projects.js" type="module"></script>
+    <script src="index.js" type="module" defer></script>
 
 </head>
 <body>
-    <h1>My Projects</h1><div class="projects">
+    <h1 class="projects-title">My Projects</h1>
+    <div class="projects"></div>
+    <script type="module">
+        import { fetchJSON } from '../global.js';
 
-
-        <article>
-            <h2>Lorem ipsum dolor sit.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti optio quidem quos facilis sunt earum consectetur magni. Veritatis vel officia, eum quaerat at fugiat ex? Autem, culpa modi! Illo, reiciendis!</p>
-        </article>
-        <article>
-            <h2>Ipsa sunt quidem quo.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Deleniti temporibus aliquam assumenda non ratione architecto ipsam debitis minima voluptate nam vitae culpa modi, corrupti libero dolor sapiente ex beatae labore voluptates quibusdam cupiditate numquam! Perspiciatis illum minima dolore.</p>
-        </article>
-        <article>
-            <h2>Excepturi illo blanditiis odio!</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Aut accusamus aperiam quaerat quidem eligendi vero ex ratione quisquam fuga. Similique dolorem commodi sunt at harum eligendi assumenda minima quo, consectetur saepe aspernatur itaque totam? Hic ducimus minus ad.</p>
-        </article>
-        <article>
-            <h2>Mollitia, fugit temporibus? Delectus.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Alias, possimus recusandae. Voluptatibus repellat eum eaque, rerum doloremque dolore ea id corporis eveniet praesentium quo voluptatem est deserunt veritatis, earum dignissimos odit laboriosam iste qui molestiae, eius unde totam.</p>
-        </article>
-        <article>
-            <h2>Modi itaque iure assumenda!</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Modi eveniet quisquam sunt doloribus excepturi maiores aperiam perspiciatis laboriosam natus, fuga consequatur provident nobis pariatur similique assumenda repellendus nam sapiente explicabo! Sequi, nisi. Ratione nesciunt blanditiis dolore officiis mollitia.</p>
-        </article>
-        <article>
-            <h2>Ipsa est impedit eaque.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Libero iste vero necessitatibus? Blanditiis nisi deserunt voluptate assumenda corporis officia perferendis! Cupiditate debitis voluptatum cumque ipsam repudiandae itaque inventore repellat consequatur quibusdam? Asperiores tempore ea consequuntur eaque velit eveniet!</p>
-        </article>
-        <article>
-            <h2>Minus quod non vitae.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Quod, nisi doloremque qui iste accusamus aliquam unde explicabo minus ratione molestiae. Tempora, libero autem ipsa eveniet cum dolorum sit, excepturi voluptas, eius illo numquam odio. Cum hic id provident.</p>
-        </article>
-        <article>
-            <h2>Non, beatae. Tempora, corporis.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>In ex, laudantium totam autem doloremque officiis aliquid pariatur tempora nisi perspiciatis nostrum culpa sunt quod. Illum officiis nam ullam accusantium, maxime ducimus provident ipsa. Nam nulla id sequi tempora.</p>
-        </article>
-        <article>
-            <h2>Tempora magni debitis unde!</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Ipsa, architecto. Incidunt qui modi cum deserunt ipsa eos at nemo eligendi exercitationem dignissimos provident quos sint dolor nostrum aliquid autem explicabo nam quia architecto quaerat dolores corrupti, sequi iste!</p>
-        </article>
-        <article>
-            <h2>Eligendi natus architecto eaque.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Nemo, consequatur mollitia deserunt quibusdam corporis placeat accusantium et exercitationem! Debitis tempora porro incidunt cumque, illo hic tenetur natus dolore officiis quia suscipit? Magni atque vero impedit. Et, repudiandae eius?</p>
-        </article>
-        <article>
-            <h2>Mollitia ratione voluptate omnis.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Expedita mollitia earum vero assumenda enim ducimus eum consequatur itaque? Sint et quae totam officia aut fugiat, sequi necessitatibus! Incidunt in porro et commodi officiis ipsa id obcaecati facilis vel.</p>
-        </article>
-        <article>
-            <h2>Fugiat adipisci modi autem.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Iure optio omnis pariatur exercitationem laboriosam maxime, tenetur incidunt ullam animi fuga aliquid repudiandae perspiciatis eos dignissimos minus corporis! Ea vero rerum ab quibusdam, saepe labore quaerat. Dignissimos, cupiditate ipsam.</p>
-        </article>
-    </div>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const projectsContainer = document.querySelector('.projects');
+            try {
+                const projects = await fetchJSON('../lib/projects.json');
+                projects.forEach(project => {
+                    const article = document.createElement('article');
+                    article.innerHTML = `
+                        <h2>${project.title}</h2>
+                        <img src="${project.image}" alt="">
+                        <p>${project.description}</p>
+                    `;
+                    projectsContainer.appendChild(article);
+                });
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        });
+    </script>
 </body>
 </html>

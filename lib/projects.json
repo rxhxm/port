@@ -1,0 +1,74 @@
+[
+    {
+        "title": "Expository Visualization JSON",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+        "description": "Created an expository visualization project focusing on data visualization techniques and best practices for clear communication of information."
+    },
+    {
+        "title": "Deceptive Visualization",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800",
+        "description": "Developed a project exploring deceptive visualization techniques and their impact on data interpretation and understanding."
+    },
+    {
+        "title": "Autonomous Config",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
+        "description": "Python-based project for autonomous system configuration and management."
+    },
+    {
+        "title": "LLaVA Tetris",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=800",
+        "description": "Python implementation of Tetris using LLaVA (Large Language and Vision Assistant) for game interaction and control."
+    },
+    {
+        "title": "Machine Learning for Early Power Outage Detection",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800",
+        "description": "Developed a machine learning system for predicting and detecting power outages in early stages."
+    },
+    {
+        "title": "EV Battery Degradation Analysis",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800",
+        "description": "Research project analyzing the effects of fast and slow charging on electric vehicle battery degradation patterns."
+    },
+    {
+        "title": "Neural Codec Resynthesis",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800",
+        "description": "HTML-based project focusing on neural audio codec resynthesis techniques."
+    },
+    {
+        "title": "Data Structures and Algorithms in Java",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800",
+        "description": "Implementation of various data structures and algorithms using Java programming language."
+    },
+    {
+        "title": "Speech Evaluation Interface MTurk",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1590615370581-265ae19a053b?w=800",
+        "description": "HTML-based interface for speech evaluation using Amazon Mechanical Turk platform."
+    },
+    {
+        "title": "Self-Supervised Speech Pretraining",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800",
+        "description": "Research project on self-supervised learning techniques for speech recognition and representation learning."
+    },
+    {
+        "title": "Personal Portfolio Website",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800",
+        "description": "JavaScript-based personal portfolio website showcasing projects and professional experience."
+    },
+    {
+        "title": "Academic Personal Website Template",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800",
+        "description": "Modified and implemented an academic personal website template using GitHub Pages and JavaScript."
+    }
+]

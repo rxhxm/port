@@ -95,3 +95,81 @@ document.body.insertAdjacentHTML(
   const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const automaticOption = themeSwitch.querySelector('option[value="light dark"]');
   automaticOption.textContent = `Automatic (${isDarkMode ? 'Dark' : 'Light'})`;
+
+
+
+
+
+
+
+  
+  export async function fetchJSON(url) {
+    try {
+        // Fetch the JSON file from the given URL
+        const response = await fetch(url);
+
+        // Check if the response is successful
+        if (!response.ok) {
+            throw new Error(`Failed to fetch projects: ${response.statusText}`);
+        }
+
+        // Parse the JSON data
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error('Error fetching or parsing JSON data:', error);
+    }
+}
+
+
+
+
+
+export function renderProjects(projects, containerElement, headingLevel = 'h2') {
+  if (!containerElement) {
+    console.error('Invalid container element');
+    return;
+  }
+
+  // Clear existing content
+  containerElement.innerHTML = '';
+
+  // Check if projects is an array
+  if (Array.isArray(projects)) {
+    projects.forEach(project => {
+      // Create an article element for each project
+      const article = document.createElement('article');
+      
+      // Populate the article with project details
+      article.innerHTML = `
+        <${headingLevel}>${project.title}</${headingLevel}>
+        <img src="${project.image}" alt="${project.title}">
+        <p>${project.description}</p>
+      `;
+      
+      // Append the article to the container
+      containerElement.appendChild(article);
+    });
+  } else {
+    console.error('Projects must be an array');
+  }
+}
+
+
+
+
+
+
+export async function fetchGithubData(username) {
+  return fetchJSON(`https://api.github.com/users/${username}`);
+}
+
+// export { fetchJSON, renderProjects, fetchGithubData };
+
+
+// const githubData = await fetchGitHubData('rxhxm');
+
+// const profileStats = document.querySelector('#profile-stats');
+
+
