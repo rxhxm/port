@@ -158,3 +158,78 @@ body {
 .cv-page {
   font-family: 'Comic Sans MS', cursive, sans-serif; /* Example of an odd font */
 }
+
+
+
+
+
+
+.project-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.project-content .description {
+  margin: 0;
+}
+
+.project-content .year {
+  margin: 0;
+  color: #666;
+  font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+  font-variant-numeric: oldstyle-nums;
+}
+
+
+
+#projects-pie-plot {
+  max-width: 20em;
+  margin-block: 2em;
+  overflow: visible;
+}
+
+
+
+
+/* Container that holds the pie and legend side by side */
+.container {
+  display: flex;
+  align-items: center;   /* Vertically center the pie and legend */
+  gap: 1em;              /* Space between the pie and legend */
+  flex-wrap: wrap;       /* Optional: allow wrapping on small viewports */
+}
+
+/* Let the legend occupy available width */
+.container .legend {
+  flex: 1;
+  /* If you already have legend styling from previous steps, ensure that the new flex property doesn't conflict */
+}
+
+/* Example: a repeat of previous legend styles if needed */
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 1em;
+  list-style: none;
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  margin: 1em 0;
+}
+
+/* Legend item styling */
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.25em;
+}
+
+/* Swatch styling for the legend */
+.legend li .swatch {
+  display: inline-block;
+  width: 1em;
+  aspect-ratio: 1 / 1;
+  background-color: var(--color);
+  border-radius: 50%;
+}
