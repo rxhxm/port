@@ -37,37 +37,37 @@
     },
     {
         "title": "Neural Codec Resynthesis",
-        "year": "2024",
+        "year": "2022",
         "image": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800",
         "description": "HTML-based project focusing on neural audio codec resynthesis techniques."
     },
     {
         "title": "Data Structures and Algorithms in Java",
-        "year": "2024",
+        "year": "2022",
         "image": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800",
         "description": "Implementation of various data structures and algorithms using Java programming language."
     },
     {
         "title": "Speech Evaluation Interface MTurk",
-        "year": "2024",
+        "year": "2023",
         "image": "https://images.unsplash.com/photo-1590615370581-265ae19a053b?w=800",
         "description": "HTML-based interface for speech evaluation using Amazon Mechanical Turk platform."
     },
     {
         "title": "Self-Supervised Speech Pretraining",
-        "year": "2024",
+        "year": "2023",
         "image": "https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800",
         "description": "Research project on self-supervised learning techniques for speech recognition and representation learning."
     },
     {
         "title": "Personal Portfolio Website",
-        "year": "2024",
+        "year": "2023",
         "image": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800",
         "description": "JavaScript-based personal portfolio website showcasing projects and professional experience."
     },
     {
         "title": "Academic Personal Website Template",
-        "year": "2024",
+        "year": "2023",
         "image": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800",
         "description": "Modified and implemented an academic personal website template using GitHub Pages and JavaScript."
     }

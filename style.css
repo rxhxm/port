@@ -233,3 +233,32 @@ body {
   background-color: var(--color);
   border-radius: 50%;
 }
+
+
+
+
+
+/* When any wedge is hovered, fade out the others */
+svg:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
+/* Smooth transition for hover effects */
+svg path {
+  transition: opacity 300ms;
+}
+
+.selected {
+  /* This overrides the --color variable on the element so that the wedge’s fill is changed */
+  --color: oklch(60% 45% 0) !important;
+}
+
+/* Only apply the fill override on path elements */
+.selected:is(path) {
+  fill: var(--color);
+}
+
+/* (Optional) Make sure all paths have a pointer cursor */
+svg path {
+  cursor: pointer;
+}
