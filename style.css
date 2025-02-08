@@ -262,3 +262,17 @@ svg path {
 svg path {
   cursor: pointer;
 }
+
+form input,
+form textarea {
+  width: 100%; /* Ensure inputs take full width of their grid area */
+}
+
+.searchBar {
+  display: block;
+  width: 100%;
+  max-width: 1000px;  /* Or any other maximum width */
+  padding: 0.5em;
+  font-size: 1rem;
+  margin: 1em auto;  /* Centers the input if desired */
+}

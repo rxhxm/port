@@ -1,24 +1,26 @@
 import { fetchJSON, renderProjects, fetchGithubData } from './global.js';
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
+// Global variables
+let currentQuery = '';
+let selectedIndex = -1;   // -1 means no pie slice is selected
+let projectsData = [];    // this should hold your fetched projects
+
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Select the DOM elements needed: projects container and search input.
     const projectsContainer = document.querySelector('.projects');
     const searchInput = document.querySelector('.searchBar');
 
     // 2. Fetch all project data.
-    const projectsData = await fetchJSON('../lib/projects.json');
-
-    // Global variable for tracking the selected wedge.
-    let selectedIndex = -1;
+    projectsData = await fetchJSON('../lib/projects.json');
 
     // Debug: log fetched data
     console.log("Loaded projectsData:", projectsData);
 
     // 3. Function to render projects in the container.
-    function renderProjectsList(projects) {
+    function renderProjectsList(filteredProjects) {
         projectsContainer.innerHTML = '';
-        projects.forEach(project => {
+        filteredProjects.forEach(project => {
             const article = document.createElement('article');
             article.innerHTML = `
                 <h2>${project.title}</h2>
@@ -29,8 +31,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // 4. Refactored pie chart rendering function including toggle (click to filter or reset) behavior.
-    function renderPieChart(projectsGiven) {
+    // 4. Refactored pie chart rendering function.
+    //
+    // Note:
+    // • We always use the full projectsData for the pie chart so that
+    //   all wedges (for all years) always appear.
+    // • When a wedge is clicked, we filter the projects list but re-render
+    //   the pie chart with projectsData.
+    function renderPieChart() {
         // Select the SVG and legend containers.
         const svg = d3.select('#projects-pie-plot');
         const legend = d3.select('.legend');
@@ -39,113 +47,122 @@ document.addEventListener('DOMContentLoaded', async () => {
         svg.selectAll('path').remove();
         legend.selectAll('li').remove();
 
-        // Group projects by year using d3.rollups().
-        const newRolledData = d3.rollups(
-            projectsGiven,
-            (v) => v.length,
-            (d) => d.year
+        // Group projects (the full list) by year.
+        const rolledData = d3.rollups(
+            projectsData,
+            v => v.length,
+            d => d.year
         );
 
         // Convert the grouped data into objects { value: count, label: year }
-        const newData = newRolledData.map(([year, count]) => ({ value: count, label: year }));
+        const fullData = rolledData.map(([year, count]) => ({ value: count, label: year }));
 
-        // If no projects are visible, stop the rendering.
-        if (newData.length === 0) return;
+        // If no projects are visible, stop rendering.
+        if (fullData.length === 0) return;
 
-        // Create a pie slice generator using the new data.
-        const newSliceGenerator = d3.pie().value(d => d.value);
-        const newArcData = newSliceGenerator(newData);
+        // Create a pie slice generator.
+        const pieGenerator = d3.pie().value(d => d.value);
+        const arcData = pieGenerator(fullData);
 
-        // Create an arc generator for drawing slices.
-        const newArcGenerator = d3.arc()
+        // Create an arc generator.
+        const arcGenerator = d3.arc()
             .innerRadius(0)
             .outerRadius(50);
 
         // Create a color scale for mapping labels to colors.
         const colorScale = d3.scaleOrdinal()
-            .domain(newData.map(d => d.label))
+            .domain(fullData.map(d => d.label))
             .range(d3.schemeCategory10);
 
         // Append the arc paths to the SVG with click events.
-        newArcData.forEach((d, i) => {
+        arcData.forEach((d, i) => {
             svg.append('path')
-                .attr('d', newArcGenerator(d))
-                .attr('fill', colorScale(newData[i].label))
+                .attr('d', arcGenerator(d))
+                .attr('fill', colorScale(fullData[i].label))
                 .attr('stroke', 'none')
                 .style('cursor', 'pointer')
+                .attr('class', i === selectedIndex ? 'selected' : '')
                 .on('click', () => {
-                    // Toggle selection: if already selected, deselect; otherwise select.
+                    // Toggle the selection.
                     selectedIndex = selectedIndex === i ? -1 : i;
-                    
-                    // Update highlighting on all wedges based on the new selectedIndex.
+
+                    // Update highlighting for all wedges and legend items.
                     svg.selectAll('path')
                         .attr('class', (_, idx) => idx === selectedIndex ? 'selected' : '');
-                    // Also update the legend's highlighting.
                     legend.selectAll('li')
                         .attr('class', (_, idx) => idx === selectedIndex ? 'selected' : '');
 
-                    // Filter the projects from the original data.
                     if (selectedIndex === -1) {
-                        // No wedge is selected—show all projects.
+                        // No wedge selected: show all projects.
                         renderProjectsList(projectsData);
                     } else {
-                        // Filter projects by the selected year.
-                        const selectedYear = newData[i].label;
-                        const filteredByYear = projectsData.filter(
-                          project => project.year === selectedYear
+                        // Filter projects using the selected wedge's year.
+                        const selectedYear = fullData[selectedIndex].label;
+                        const filteredProjects = projectsData.filter(
+                            project => project.year === selectedYear
                         );
-                        renderProjectsList(filteredByYear);
+                        renderProjectsList(filteredProjects);
                     }
+                    // Always re-render the pie chart with the full data.
+                    renderPieChart();
                 });
         });
 
         // Append legend items with click events.
-        newData.forEach((d, i) => {
+        fullData.forEach((d, i) => {
             legend.append('li')
                 .attr('style', `--color: ${colorScale(d.label)}`)
                 .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
                 .style('cursor', 'pointer')
+                .attr('class', i === selectedIndex ? 'selected' : '')
                 .on('click', () => {
+                    // Toggle selection for the legend similarly.
                     selectedIndex = selectedIndex === i ? -1 : i;
+
                     svg.selectAll('path')
                         .attr('class', (_, idx) => idx === selectedIndex ? 'selected' : '');
                     legend.selectAll('li')
                         .attr('class', (_, idx) => idx === selectedIndex ? 'selected' : '');
-                    
+
                     if (selectedIndex === -1) {
                         renderProjectsList(projectsData);
                     } else {
-                        const selectedYear = newData[i].label;
-                        const filteredByYear = projectsData.filter(
-                          project => project.year === selectedYear
+                        const selectedYear = fullData[selectedIndex].label;
+                        const filteredProjects = projectsData.filter(
+                            project => project.year === selectedYear
                         );
-                        renderProjectsList(filteredByYear);
+                        renderProjectsList(filteredProjects);
                     }
+                    // Always re-render the pie chart with the full data.
+                    renderPieChart();
                 });
         });
     }
 
-    // 5. Initial rendering of all projects.
+    // 5. Initial rendering of all projects and the full pie chart.
     renderProjectsList(projectsData);
-    renderPieChart(projectsData);
+    renderPieChart();
 
     // 6. Listen for input events on the search field.
+    // When searching, clear any wedge selection and filter projects.
+    // (Here we leave the pie chart based on the full projectsData to keep our filtering UI consistent.)
     searchInput.addEventListener('input', (event) => {
-        // Clear any active wedge selection.
+        currentQuery = event.target.value.toLowerCase();
+       
+        // Reset the pie slice selection when typing.
         selectedIndex = -1;
-        const query = event.target.value;
-        console.log("Search query:", query);
-      
-        // Filter projects based on search query.
-        const filteredProjects = projectsData.filter(project => {
-          const values = Object.values(project).join('\n').toLowerCase();
-          return values.includes(query.toLowerCase());
+  
+        // First, apply the search query filter.
+        let filteredProjects = projectsData.filter(project => {
+            const values = Object.values(project).join('\n').toLowerCase();
+            return values.includes(currentQuery);
         });
-      
-        console.log("Filtered projects count:", filteredProjects.length);
-      
+  
+        // Render the projects (currently filtered only by search)
         renderProjectsList(filteredProjects);
-        renderPieChart(filteredProjects);
+  
+        // Optionally, you may also want to update the pie chart
+        // to reflect the search filtering. If so, call renderPieChart() here.
     });
 
     // 7. Load GitHub Stats if the element exists.
