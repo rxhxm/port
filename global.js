@@ -15,12 +15,13 @@ currentLink?.classList.add('current');
 
 
 let pages = [
-    { url: '', title: 'Home' },
-    { url: 'projects/', title: 'Projects' },
-    { url: 'contact/', title: 'Contact' },
-    { url: 'cv/', title: 'CV' },
-    { url: 'https://github.com/rxhxm', title: 'GitHub' }
-  ];
+  { url: '', title: 'Home' },
+  { url: 'projects/', title: 'Projects' },
+  { url: 'meta/', title: 'Meta' },
+  { url: 'contact/', title: 'Contact' },
+  { url: 'cv/', title: 'CV' },
+  { url: 'https://github.com/rxhxm', title: 'GitHub' }
+];
 
 
 
