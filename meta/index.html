@@ -5,10 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meta Analysis</title>
   <link rel="stylesheet" href="../style.css">
+  <!-- Load any global JavaScript modules if necessary -->
   <script src="../global.js" type="module" defer></script>
+  <!-- Load D3 -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Load our main JavaScript file -->
+  <script src="main.js" type="module"></script>
 </head>
 <body>
   <h1>Meta Analysis of the Code</h1>
   <p>This page displays various statistics and analysis about the codebase of this website.</p>
+
+  <!-- Statistics display -->
+  <div id="stats"></div>
+
+  <h2>Commits by time of day</h2>
+  <!-- Chart container -->
+  <div id="chart"></div>
+
+  <!-- Display brush selection count and language breakdown -->
+  <p id="selection-count">No commits selected</p>
+  <dl id="language-breakdown" class="stats"></dl>
+
+  <!-- Static tooltip element for commit details -->
+  <dl id="commit-tooltip" class="info tooltip">
+    <dt>Commit</dt>
+    <dd>
+      <a href="" id="commit-link" target="_blank"></a>
+    </dd>
+    <dt>Date</dt>
+    <dd id="commit-date"></dd>
+  </dl>
 </body>
 </html>

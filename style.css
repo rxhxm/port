@@ -1,22 +1,14 @@
+/* Base styles */
 body {
   font: 100%/1.5 system-ui;
-
-
-
-  /* Limit the maximum width of the content */
   max-width: 100ch;
-
-  /* Center content horizontally */
   margin-inline: auto;
-
-  /* Optional: Add padding for spacing on smaller screens */
   padding: 0 1rem;
-
-  /* Set font properties */
-  font: 100%/1.5 system-ui;
-
+  background-color: Canvas;
+  color: CanvasText;
 }
 
+/* Navigation styles */
 nav ul, nav li {
   display: contents;
 }
@@ -35,7 +27,6 @@ nav a {
   text-align: center;
   text-decoration: none;
   color: inherit;
-  text-align: center;
   padding: 0.5em;
 }
 
@@ -44,6 +35,7 @@ nav a.current {
   padding-bottom: 0.1em;
 }
 
+/* Color scheme toggle (if needed) */
 .color-scheme {
   position: absolute;
   top: 1rem;
@@ -52,17 +44,16 @@ nav a.current {
   font-family: inherit;
 }
 
-
-
+/* Accent color and background colors */
 :root {
   --color-accent: oklch(75% 0.2 45);
-  color-scheme: light dark; /* Allow the site to adapt to the OS color scheme */
+  color-scheme: light dark;
 }
 
 html {
   accent-color: var(--color-accent);
-  background-color: Canvas; /* Use system color for background */
-  color: CanvasText; /* Use system color for text */
+  background-color: Canvas;
+  color: CanvasText;
 }
 
 nav a:hover {
@@ -70,10 +61,7 @@ nav a:hover {
   background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
 }
 
-
-
-
-
+/* Form styles */
 form {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -81,72 +69,56 @@ form {
 }
 
 form label {
-  display: contents; /* Allow label's children to be placed directly in the grid */
+  display: contents;
 }
 
 form input,
 form textarea {
-  width: 100%; /* Ensure inputs take full width of their grid area */
+  width: 100%;
 }
 
 form button {
-  grid-column: 1 / -1; /* Span the entire row */
-  width: auto; /* Adjust width to fit content */
-  padding: 0.5em 1em; /* Add padding for better appearance */
+  grid-column: 1 / -1;
+  width: auto;
+  padding: 0.5em 1em;
 }
 
-
-
-
-
-
-
-
-
+/* Projects layout (if used elsewhere) */
 .projects {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2em;
-  display: grid; /* Enable grid layout */
-  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)); /* Responsive grid */
-  gap: 2em; /* Spacing between items */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  gap: 2em;
 }
 
 .projects article {
-  display: grid; /* Make articles grid containers */
-  grid-template-rows: subgrid; /* Align content within the grid */
-  grid-row: span 3; /* Span each article across 3 rows */
-  gap: 1em; /* Space out children */
+  display: grid;
+  grid-row: span 3;
+  gap: 1em;
 }
 
 .projects h2 {
   font-size: 1.5em;
-  margin: 0; /* Remove excess spacing */
+  margin: 0;
   text-align: left;
 }
 
 .projects img {
-  width: 100%; /* Ensure images fill their grid cell */
-  aspect-ratio: 16/9; /* Maintain aspect ratio */
-  object-fit: cover; /* Ensure images fit neatly */
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
   background-color: #e2a89f;
 }
 
 .projects p {
   margin: 0;
   line-height: 1.5;
-  color: #3184f8; /* Example color */
+  color: #3184f8;
 }
 
-
-
-
-
-
-
-
-
-/* Dark Mode Styles */
+/* Dark Mode Overrides */
 body {
   font: 100%/1.5 system-ui;
   max-width: 100ch;
@@ -154,16 +126,11 @@ body {
   padding: 0 1rem;
 }
 
-
 .cv-page {
-  font-family: 'Comic Sans MS', cursive, sans-serif; /* Example of an odd font */
+  font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
-
-
-
-
-
+/* Content styling for other sections */
 .project-content {
   display: flex;
   flex-direction: column;
@@ -181,98 +148,108 @@ body {
   font-variant-numeric: oldstyle-nums;
 }
 
-
-
-#projects-pie-plot {
-  max-width: 20em;
-  margin-block: 2em;
-  overflow: visible;
-}
-
-
-
-
-/* Container that holds the pie and legend side by side */
-.container {
-  display: flex;
-  align-items: center;   /* Vertically center the pie and legend */
-  gap: 1em;              /* Space between the pie and legend */
-  flex-wrap: wrap;       /* Optional: allow wrapping on small viewports */
-}
-
-/* Let the legend occupy available width */
-.container .legend {
-  flex: 1;
-  /* If you already have legend styling from previous steps, ensure that the new flex property doesn't conflict */
-}
-
-/* Example: a repeat of previous legend styles if needed */
-.legend {
+/* Stats display styling */
+.stats {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
-  gap: 1em;
-  list-style: none;
-  border: 1px solid #ccc;
-  padding: 0.5em;
-  margin: 1em 0;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-/* Legend item styling */
-.legend li {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  padding: 0.25em;
+.stats dt {
+  font-weight: bold;
+  text-align: right;
+  padding-right: 0.5rem;
+  color: #333;
 }
 
-/* Swatch styling for the legend */
-.legend li .swatch {
-  display: inline-block;
-  width: 1em;
-  aspect-ratio: 1 / 1;
-  background-color: var(--color);
-  border-radius: 50%;
+.stats dd {
+  margin: 0;
+  text-align: left;
+  color: #555;
+}
+
+/* Styling for informational <dl> elements (e.g., tooltips) */
+dl.info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 1rem 0;
+}
+
+dl.info dt {
+  font-weight: bold;
+  text-align: right;
+  padding-right: 0.5rem;
+  color: #333;
+}
+
+dl.info dd {
+  margin: 0;
+  text-align: left;
+  color: #555;
+}
+
+/* Position the tooltip at the top left of the viewport */
+.tooltip {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+}
+
+/* Dot hover styles with smooth scaling */
+circle {
+  transition: 200ms;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+circle:hover {
+  transform: scale(1.5);
+}
+
+/* Additional styles for the chart container */
+#chart {
+  margin: 2em 0;
 }
 
 
 
 
+/* --- Tooltip Styling for Step 3.2 --- */
 
-/* When any wedge is hovered, fade out the others */
-svg:has(path:hover) path:not(:hover) {
-  opacity: 0.5;
+/* Make the commit tooltip look like an actual popup tooltip */
+/* --- Tooltip Styling for Step 3.2 --- */
+#commit-tooltip {
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  font-size: 0.9em;
+  /* Remove display: none here – let the hidden attribute and opacity/visibility transitions control it */
+  z-index: 100;
 }
 
-/* Smooth transition for hover effects */
-svg path {
-  transition: opacity 300ms;
+
+
+dl.info {
+  /* ... existing styles ... */
+  transition-duration: 500ms;
+  transition-property: opacity, visibility;
 }
 
-.selected {
-  /* This overrides the --color variable on the element so that the wedge’s fill is changed */
-  --color: oklch(60% 45% 0) !important;
-}
-
-/* Only apply the fill override on path elements */
-.selected:is(path) {
-  fill: var(--color);
-}
-
-/* (Optional) Make sure all paths have a pointer cursor */
-svg path {
-  cursor: pointer;
-}
-
-form input,
-form textarea {
-  width: 100%; /* Ensure inputs take full width of their grid area */
-}
-
-.searchBar {
-  display: block;
-  width: 100%;
-  max-width: 1000px;  /* Or any other maximum width */
-  padding: 0.5em;
-  font-size: 1rem;
-  margin: 1em auto;  /* Centers the input if desired */
+/* When the tooltip is hidden (and not being hovered or focused), set it to transparent */
+dl.info[hidden]:not(:hover, :focus-within) {
+  opacity: 0;
+  visibility: hidden;
 }
