@@ -20,12 +20,29 @@
   <div id="stats"></div>
 
   <h2>Commits by time of day</h2>
-  <!-- Chart container -->
-  <div id="chart"></div>
+  
+  <!-- Scrollytelling container -->
+  <div id="scrollytelling">
+    <div id="scroll-container">
+      <div id="spacer"></div>
+      <div id="items-container"></div>
+    </div>
+    <!-- Date indicator that follows the scrollbar -->
+    <div id="scroll-date-indicator"></div>
+    <!-- Chart container -->
+    <div id="chart"></div>
+  </div>
 
   <!-- Display brush selection count and language breakdown -->
   <p id="selection-count">No commits selected</p>
   <dl id="language-breakdown" class="stats"></dl>
+
+  <!-- File size visualization -->
+  <h2>Files by Size</h2>
+  <p>Each dot represents one line of code, colored by technology.</p>
+  <dl class="files">
+    <!-- Files will be displayed here -->
+  </dl>
 
   <!-- Static tooltip element for commit details -->
   <dl id="commit-tooltip" class="info tooltip">
