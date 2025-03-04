@@ -56,6 +56,9 @@ function processCommits() {
       });
       return ret;
     });
+    
+  // Sort commits chronologically
+  commits = commits.sort((a, b) => a.datetime - b.datetime);
 
   // Create the time scale after commits are processed
   timeScale = d3.scaleTime()
@@ -427,7 +430,10 @@ function displayCommitFiles() {
 // Initialize scrollytelling after data is loaded
 function initScrollytelling() {
   NUM_ITEMS = commits.length;
-  totalHeight = NUM_ITEMS * ITEM_HEIGHT;
+  
+  // We need to calculate exactly how much scrollable space we need
+  // This should be the height needed for all commits minus what's visible
+  totalHeight = Math.max(0, (commits.length - VISIBLE_COUNT)) * ITEM_HEIGHT;
   
   // Set up the spacer height
   const spacer = d3.select('#spacer');
@@ -436,42 +442,55 @@ function initScrollytelling() {
   // Create the date indicator
   const dateIndicator = d3.select('#scroll-date-indicator');
   
-  // Set up scroll event
+  // Set up scroll event with debouncing to prevent excessive rendering
   const scrollContainer = d3.select('#scroll-container');
+  let scrollTimeout;
+  
   scrollContainer.on('scroll', () => {
+    // Clear previous timeout to debounce rapid scroll events
+    clearTimeout(scrollTimeout);
+    
+    // Get the scroll position
     const scrollTop = scrollContainer.property('scrollTop');
+    
+    // Calculate which items should be visible
+    // Use Math.floor to ensure we snap to item boundaries
     let startIndex = Math.floor(scrollTop / ITEM_HEIGHT);
     startIndex = Math.max(0, Math.min(startIndex, commits.length - VISIBLE_COUNT));
     
-    // Update the visible items
-    renderItems(startIndex);
-    
-    // Update the date indicator position and text
-    if (commits.length > 0) {
-      const containerHeight = scrollContainer.node().clientHeight;
-      const scrollRatio = scrollTop / (totalHeight - containerHeight);
-      const scrollableHeight = scrollContainer.node().clientHeight - 30; // Adjust for indicator height
+    // Set timeout to update content after scrolling stops
+    scrollTimeout = setTimeout(() => {
+      // Update the visible items
+      renderItems(startIndex);
       
-      // Calculate position based on scroll ratio
-      const indicatorTop = scrollRatio * scrollableHeight;
-      
-      // Get the commit date that corresponds to the current scroll position
-      const dateIndex = Math.floor(scrollRatio * commits.length);
-      const clampedIndex = Math.max(0, Math.min(dateIndex, commits.length - 1));
-      const currentDate = commits[clampedIndex].datetime;
-      
-      // Format the date
-      const dateStr = currentDate.toLocaleDateString('en', {
-        month: 'short',
-        day: 'numeric', 
-        year: 'numeric'
-      });
-      
-      // Update the indicator
-      dateIndicator
-        .style('top', `${indicatorTop}px`)
-        .text(dateStr);
-    }
+      // Update the date indicator
+      if (commits.length > 0) {
+        const containerHeight = scrollContainer.node().clientHeight;
+        // Calculate ratio but ensure it's between 0 and 1
+        const maxScroll = Math.max(1, totalHeight - containerHeight);
+        const scrollRatio = Math.min(1, Math.max(0, scrollTop / maxScroll));
+        
+        // Get position for the indicator
+        const scrollableHeight = scrollContainer.node().clientHeight - 30;
+        const indicatorTop = scrollRatio * scrollableHeight;
+        
+        // Calculate which commit's date to show
+        const dateIndex = Math.floor(scrollRatio * (commits.length - 1));
+        const clampedIndex = Math.max(0, Math.min(dateIndex, commits.length - 1));
+        const currentDate = commits[clampedIndex].datetime;
+        
+        // Format and display date
+        const dateStr = currentDate.toLocaleDateString('en', {
+          month: 'short',
+          day: 'numeric', 
+          year: 'numeric'
+        });
+        
+        dateIndicator
+          .style('top', `${indicatorTop}px`)
+          .text(dateStr);
+      }
+    }, 10); // Small delay to improve performance while scrolling
   });
   
   // Initial render

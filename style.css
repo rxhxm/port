@@ -329,6 +329,10 @@ dl.info[hidden]:not(:hover, :focus-within) {
   overflow-y: scroll;
   border: 1px solid #ccc;
   margin-bottom: 50px;
+  scroll-behavior: smooth;
+  /* Prevent overscrolling with these properties */
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 #chart {
@@ -348,13 +352,24 @@ dl.info[hidden]:not(:hover, :focus-within) {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: calc(100% - 16px); /* Account for scrollbar width */
+  box-sizing: border-box;
 }
 
 .item {
   padding: 10px;
   box-sizing: border-box;
   border-bottom: 2px solid #eee;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  margin-bottom: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+}
+
+.item:hover {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 /* Scroll date indicator styles */
